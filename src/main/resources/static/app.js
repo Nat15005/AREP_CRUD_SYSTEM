@@ -2,7 +2,7 @@ const API_URL = "http://localhost:8080/api/properties";
 
 // Variables globales para paginación
 let currentPage = 0;
-const pageSize = 10;
+const pageSize = 5;
 
 // Obtener referencia a los elementos del DOM
 const propertyForm = document.getElementById("propertyForm");
@@ -57,6 +57,7 @@ async function loadProperties(page = currentPage) {
 }
 
 // Función para avanzar a la siguiente página
+
 function nextPage() {
     currentPage++;
     loadProperties(currentPage);
@@ -72,6 +73,9 @@ function previousPage() {
 
 // Función para buscar propiedades
 async function searchProperties() {
+    // Reiniciar la página a la primera (0) antes de buscar
+    currentPage = 0;
+
     const query = document.getElementById("searchQuery").value.trim();
     const maxPrice = document.getElementById("maxPrice").value.trim();
     const maxSize = document.getElementById("maxSize").value.trim();
@@ -129,11 +133,15 @@ function clearFilters() {
 
 function updatePagination(totalPages) {
     const paginationDiv = document.getElementById("pagination");
-    paginationDiv.innerHTML = `
-        <button onclick="previousPage()" ${currentPage === 0 ? "disabled" : ""}>Anterior</button>
-        <span>Página ${currentPage + 1} de ${totalPages}</span>
-        <button onclick="nextPage()" ${currentPage === totalPages - 1 ? "disabled" : ""}>Siguiente</button>
-    `;
+    if (totalPages === 0) {
+        paginationDiv.innerHTML = `<span>No hay propiedades para mostrar.</span>`;
+    } else {
+        paginationDiv.innerHTML = `
+            <button onclick="previousPage()" ${currentPage === 0 ? "disabled" : ""}>Anterior</button>
+            <span>Página ${currentPage + 1} de ${totalPages}</span>
+            <button onclick="nextPage()" ${currentPage === totalPages - 1 ? "disabled" : ""}>Siguiente</button>
+        `;
+    }
 }
 
 // Función para agregar o actualizar una propiedad

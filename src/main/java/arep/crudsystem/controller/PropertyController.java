@@ -17,7 +17,7 @@ public class PropertyController {
     // Obtener todas las propiedades con paginación
     @GetMapping
     public Page<Property> getAllProperties(@RequestParam(defaultValue = "0") int page,
-                                           @RequestParam(defaultValue = "10") int size) {
+                                           @RequestParam(defaultValue = "5") int size) {
         return propertyService.getAllProperties(page, size);
     }
 
@@ -27,7 +27,7 @@ public class PropertyController {
                                            @RequestParam(required = false) Double maxPrice,
                                            @RequestParam(required = false) Double maxSize,
                                            @RequestParam(defaultValue = "0") int page,
-                                           @RequestParam(defaultValue = "10") int size) {
+                                           @RequestParam(defaultValue = "5") int size) {
         return propertyService.searchProperties(query, maxPrice, maxSize, page, size);
     }
 
