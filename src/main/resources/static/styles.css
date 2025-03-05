@@ -246,3 +246,21 @@ td {
     margin: 15px 15px;
     align-self: center;
 }
+
+/* Estilo para el contenedor de mensajes */
+#message {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Posición fija en la pantalla */
+    top: 20px; /* Distancia desde la parte superior */
+    left: 50%; /* Centrado horizontalmente */
+    transform: translateX(-50%); /* Ajuste para centrar */
+    padding: 15px 30px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 20px; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Texto centrado */
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para resaltar */
+}
+
+

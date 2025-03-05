@@ -14,9 +14,24 @@ const maxSizeInput = document.getElementById("maxSize");
 // Función para mostrar mensajes de éxito o error
 function showMessage(message, isError = false) {
     const messageDiv = document.getElementById("message");
+
+    // Establecer el mensaje
     messageDiv.textContent = message;
+
     messageDiv.style.color = isError ? "red" : "green";
     messageDiv.style.display = "block";
+    messageDiv.style.fontSize = "18px";
+    messageDiv.style.fontWeight = "bold";
+    messageDiv.style.padding = "10px 20px";
+    messageDiv.style.borderRadius = "5px";
+    messageDiv.style.backgroundColor = isError ? "#FFEBEE" : "#ffffff";
+    messageDiv.style.position = "fixed";
+    messageDiv.style.top = "20px"; // Distancia desde la parte superior
+    messageDiv.style.left = "50%";
+    messageDiv.style.transform = "translateX(-50%)"; // Ajuste para centrar
+    messageDiv.style.zIndex = "1000"; // Asegurar que esté por encima de otros elementos
+    messageDiv.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+
     setTimeout(() => {
         messageDiv.style.display = "none";
     }, 3000);
