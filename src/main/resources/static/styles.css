@@ -128,6 +128,19 @@ input, textarea {
     margin-bottom: 10px;
 }
 
+/* Alinear los botones de búsqueda y quitar filtro en fila */
+.button-group {
+    display: flex;
+    justify-content: center !important; /* Centrarlos horizontalmente */
+    gap: 20px !important; /* Espacio entre los botones */
+    margin-top: 10px;
+}
+
+.button-group button {
+    margin: 0 !important; /* Eliminar márgenes extras */
+}
+
+
 /* Lista de propiedades */
 #propertyListContainer {
     margin: 20px;

@@ -72,15 +72,15 @@ function previousPage() {
 
 // Función para buscar propiedades
 async function searchProperties() {
-    const query = document.getElementById("searchQuery").value || null;
-    const maxPrice = parseFloat(document.getElementById("maxPrice").value) || null;
-    const maxSize = parseFloat(document.getElementById("maxSize").value) || null;
+    const query = document.getElementById("searchQuery").value.trim();
+    const maxPrice = document.getElementById("maxPrice").value.trim();
+    const maxSize = document.getElementById("maxSize").value.trim();
 
     // Construir la URL de búsqueda de manera segura
     let url = `${API_URL}/search?page=${currentPage}&size=${pageSize}`;
     if (query) url += `&query=${encodeURIComponent(query)}`;
-    if (maxPrice) url += `&maxPrice=${maxPrice}`;
-    if (maxSize) url += `&maxSize=${maxSize}`;
+    if (maxPrice) url += `&maxPrice=${parseFloat(maxPrice)}`;
+    if (maxSize) url += `&maxSize=${parseFloat(maxSize)}`;
 
     try {
         const response = await fetch(url);
@@ -109,16 +109,22 @@ async function searchProperties() {
             `;
         });
 
-        // Limpiar los campos del formulario después de la búsqueda
-        document.getElementById("searchQuery").value = "";
-        document.getElementById("maxPrice").value = "";
-        document.getElementById("maxSize").value = "";
-
         // Actualizar controles de paginación
         updatePagination(properties.totalPages);
     } catch (error) {
         showMessage(error.message, true);
     }
+}
+
+function clearFilters() {
+    // Limpiar los campos de búsqueda
+    document.getElementById("searchQuery").value = "";
+    document.getElementById("maxPrice").value = "";
+    document.getElementById("maxSize").value = "";
+
+    // Cargar todas las propiedades sin filtros
+    currentPage = 0; // Reiniciar la página a la primera
+    loadProperties();
 }
 
 function updatePagination(totalPages) {

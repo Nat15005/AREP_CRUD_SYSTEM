@@ -42,7 +42,12 @@
             <input type="number" id="maxPrice" placeholder="Precio máximo">
             <label for="maxSize">Tamaño</label>
             <input type="number" id="maxSize" placeholder="Tamaño máximo">
-            <button onclick="searchProperties()">Buscar</button>
+
+            <!-- Contenedor para los botones alineados en fila -->
+            <div class="button-group">
+                <button onclick="searchProperties()">Buscar</button>
+                <button onclick="clearFilters()">Quitar Filtro</button>
+            </div>
         </div>
     </div>
 </div>
