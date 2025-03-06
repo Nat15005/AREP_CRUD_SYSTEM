@@ -1,12 +1,26 @@
-## Prueba Back
-![image](https://github.com/user-attachments/assets/48664ca8-d9de-4973-9f0f-410260cdf9fa)
-![image](https://github.com/user-attachments/assets/14feb4de-793a-4612-85c3-7d997411ed78)
-![image](https://github.com/user-attachments/assets/501dda81-64ab-40da-a49d-21c4a36391c9)
-![image](https://github.com/user-attachments/assets/80720258-89f8-4fbe-8174-bd7bd83c14f3)
+# Property Management System
 
-## Preuba Front
-![image](https://github.com/user-attachments/assets/126ea384-5971-47cf-ae6f-4de5df904b96)
+## Project Summary
+The **Property Management System** is a web application designed to manage real estate properties. It provides CRUD (Create, Read, Update, Delete) functionality for property listings, allowing users to add, view, update, and delete properties. The system also supports pagination and search functionality to filter properties by address, price, and size.
 
+### Key Features:
+- **Create Property**: Add new property listings with details such as address, price, size, and description.
+- **Read Property**: View a list of all properties or search for specific properties using filters.
+- **Update Property**: Modify existing property details.
+- **Delete Property**: Remove properties from the system.
+- **Pagination**: Browse properties in pages for better usability.
+- **Search**: Filter properties by address, price range, and size.
 
+---
 
+## System Architecture
+The system is built using a **3-tier architecture**:
+1. **Frontend**: A simple user interface built with HTML, JavaScript, and CSS. It communicates with the backend via REST APIs.
+2. **Backend**: A Spring Boot application that handles business logic and exposes RESTful endpoints for CRUD operations.
+3. **Database**: A MySQL database for storing property data. The backend interacts with the database using Spring Data JPA.
 
+### Interaction Flow:
+1. The frontend sends HTTP requests (GET, POST, PUT, DELETE) to the backend.
+2. The backend processes the requests, performs the necessary operations, and interacts with the database.
+3. The database stores and retrieves property data as requested by the backend.
+4. The backend sends responses back to the frontend, which displays the results to the user.
