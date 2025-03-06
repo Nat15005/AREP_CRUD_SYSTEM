@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/properties";
+const API_URL = "/api/properties";
 
 // Variables globales para paginación
 let currentPage = 0;
