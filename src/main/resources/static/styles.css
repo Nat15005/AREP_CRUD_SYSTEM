@@ -47,7 +47,7 @@ h1::before {
     padding: 15px 2px;
     border-radius: 12px;
     width: 50%;
-    margin-left: 210px;
+    margin-left: 10%;
     display: flex;
     justify-content: center;
 }

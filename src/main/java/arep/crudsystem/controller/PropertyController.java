@@ -7,6 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for managing properties.
+ * This controller provides endpoints for CRUD operations on properties,
+ * including pagination and search functionality.
+ */
 @RestController
 @RequestMapping("/api/properties")
 public class PropertyController {
@@ -14,14 +19,29 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
-    // Obtener todas las propiedades con paginación
+    /**
+     * Retrieves all properties with pagination.
+     *
+     * @param page The page number to retrieve (default is 0).
+     * @param size The number of properties per page (default is 5).
+     * @return A page of properties.
+     */
     @GetMapping
     public Page<Property> getAllProperties(@RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "5") int size) {
         return propertyService.getAllProperties(page, size);
     }
 
-    // Buscar propiedades con filtros
+    /**
+     * Searches for properties based on filters and returns them with pagination.
+     *
+     * @param query    The search query to filter properties by address or description (optional).
+     * @param maxPrice The maximum price to filter properties (optional).
+     * @param maxSize  The maximum size to filter properties (optional).
+     * @param page     The page number to retrieve (default is 0).
+     * @param size     The number of properties per page (default is 5).
+     * @return A page of properties matching the filters.
+     */
     @GetMapping("/search")
     public Page<Property> searchProperties(@RequestParam(required = false) String query,
                                            @RequestParam(required = false) Double maxPrice,
@@ -31,7 +51,12 @@ public class PropertyController {
         return propertyService.searchProperties(query, maxPrice, maxSize, page, size);
     }
 
-    // Obtener una propiedad por ID
+    /**
+     * Retrieves a property by its ID.
+     *
+     * @param id The ID of the property to retrieve.
+     * @return A ResponseEntity containing the property if found, or a 404 status if not found.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Property> getPropertyById(@PathVariable Long id) {
         return propertyService.getPropertyById(id)
@@ -39,19 +64,35 @@ public class PropertyController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Crear una nueva propiedad
+    /**
+     * Creates a new property.
+     *
+     * @param property The property to create.
+     * @return The created property.
+     */
     @PostMapping
     public Property createProperty(@RequestBody Property property) {
         return propertyService.createProperty(property);
     }
 
-    // Actualizar una propiedad existente
+    /**
+     * Updates an existing property.
+     *
+     * @param id             The ID of the property to update.
+     * @param propertyDetails The updated property details.
+     * @return A ResponseEntity containing the updated property.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Property> updateProperty(@PathVariable Long id, @RequestBody Property propertyDetails) {
         return ResponseEntity.ok(propertyService.updateProperty(id, propertyDetails));
     }
 
-    // Eliminar una propiedad
+    /**
+     * Deletes a property by its ID.
+     *
+     * @param id The ID of the property to delete.
+     * @return A ResponseEntity with no content (204 status).
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
         propertyService.deleteProperty(id);
