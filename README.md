@@ -110,7 +110,7 @@ Backend → Frontend: The backend sends responses back to the frontend, which di
 
 The main classes in the system are:
 
-🏠 Property (Model)
+### 🏠 Property (Model)
 - Description: Represents a property entity in the system. This class is mapped to the properties table in the database using JPA annotations.
 
 - Attributes:
@@ -127,7 +127,7 @@ The main classes in the system are:
 
 - Functionality: This class is used to store and retrieve property data from the database.
 
-🎛️ PropertyController (Controller)
+### 🎛️ PropertyController (Controller)
 - Description: This is the REST controller that handles HTTP requests for CRUD operations on properties. It exposes endpoints for creating, reading, updating, and deleting properties, as well as searching and pagination.
 
 - Key Endpoints:
@@ -146,7 +146,7 @@ The main classes in the system are:
 
 - Functionality: Acts as the interface between the frontend and the backend, processing requests and returning appropriate responses.
 
-🛠️ PropertyService (Service)
+### 🛠️ PropertyService (Service)
 
 - Description: This class contains the business logic for managing properties. It interacts with the PropertyRepository to perform CRUD operations, pagination, and search functionality.
 
@@ -166,7 +166,7 @@ The main classes in the system are:
 
 - Functionality: Handles the core logic for property management and ensures data consistency.
 
-🗄️ PropertyRepository (Repository)
+### 🗄️ PropertyRepository (Repository)
 
 - Description: This interface extends JpaRepository and provides CRUD operations for the Property entity. It also includes a custom query method for searching properties based on filters.
 
@@ -175,25 +175,259 @@ The main classes in the system are:
    - search(String query, Double maxPrice, Double maxSize, Pageable pageable): Searches for properties based on address, price, and size filters, and returns paginated results.
 
 - Functionality: Acts as the data access layer, interacting directly with the database to perform CRUD operations and custom queries.
+### Folder Structure 📂
 
+```
+src
+├───main
+│   ├───java
+│   │   └───arep
+│   │       └───crudsystem
+│   │           │   🚀 CrudsystemApplication.java
+│   │           │
+│   │           ├───controller
+│   │           │       🎛️ PropertyController.java
+│   │           │
+│   │           ├───model
+│   │           │       🏠 Property.java
+│   │           │
+│   │           ├───repository
+│   │           │       🗄️ PropertyRepository.java
+│   │           │
+│   │           └───service
+│   │                   🛠️ PropertyService.java
+│   │
+│   └───resources
+│       └───static
+│               app.js
+│             
+│               index.html
+│               
+│               styles.css
+│
+└───test
+    └───java
+        └───arep
+            └───crudsystem
+                │   🧪 CrudsystemApplicationTests.java
+                │
+                ├───controller
+                │       🧪 PropertyControllerTest.java
+                │
+                ├───repository
+                │       🧪 PropertyRepositoryTest.java
+                │
+                └───service
+                        🧪 PropertyServiceTest.java
+
+```                        
 ## Deployment Instructions
 
+### BackEnd
+
+1. Add the Dockerfile to the Root of the Project
+2. Build the Docker Image
+   
+   ```
+   docker build --tag areptaller5 .
+   ```
+3. Create a Repository on Docker Hub
+
+   ![image](https://github.com/user-attachments/assets/c27251af-16ae-468f-9117-964035dac2bb)
+
+4. Tag the Local Image
+   ```
+   docker tag areptaller5 nat1505/areptaller5
+   ```
+5. Push the Image to Docker Hub
+    ```
+    docker push nat1505/areptaller5:latest
+    ```
+6. Launch the EC2 Instance
+
+   ![image](https://github.com/user-attachments/assets/d582cf0b-4a65-4acd-8125-a662bbb015ab)
+
+7. Configure AWS Security Group to Allow External Access
+   - Go to the AWS EC2 Console.
+      - Find your instance and open the Security Group settings.
+      - Edit Inbound Rules and add a rule to allow traffic:
+         - Type: Custom TCP
+         - Port Range: 8080
+         - Source: Anywhere (0.0.0.0/0)
+
+   ![image](https://github.com/user-attachments/assets/cd897fb3-09f3-4b92-af97-54c7dd8d3b25)
+
+           
+8. Connect to the EC2 Instance
+   ```
+   ssh -i path/to/your-key.pem ec2-user@<EC2-public-IP>
+   ```
+9. Install Docker on the EC2 Instance
+   ```
+   sudo yum update -y
+   sudo yum install docker -y
+   sudo service docker start
+   sudo usermod -a -G docker ec2-user
+   ```
+10. Download the Image from Docker Hub
+      ```
+      docker pull nat1505/areptaller5:latest
+      ```
+11. Run the Container
+      ```
+      docker run -d -p 8080:8080 --name areptaller5 nat1505/areptaller5
+      ```
+### EC2 Instance for MySQL
+
+1. Create an EC2 Instance
+
+   ![image](https://github.com/user-attachments/assets/04407574-5fcd-427a-968f-4e8389284a7c)
+
+2. Configure AWS Security Group to Allow External Access
+   - Go to the AWS EC2 Console.
+      - Find your instance and open the Security Group settings.
+      - Edit Inbound Rules and add a rule to allow traffic:
+         - Type: Custom TCP
+         - Port Range: 3306
+         - Source: Anywhere (0.0.0.0/0)
+
+   ![image](https://github.com/user-attachments/assets/7d49c039-aae5-4b41-a448-ebb341da3edd)
+
+3. Connect to the EC2 Instance
+   ```
+   ssh -i path/to/your-key.pem ec2-user@<EC2-public-IP>
+   ```
+4. Install Docker on the EC2 Instance
+      ```
+      sudo yum update -y
+      sudo yum install docker -y
+      sudo service docker start
+      sudo usermod -a -G docker ec2-user
+      ```
+5. Run a MySQL Container
+   ```
+   docker run --name database-container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=property_db -p 3307:3306 -d mysql:latest
+   ```
+6. Use the following command to access the MySQL console
+   ```
+   docker exec -it database-container mysql -u root -p
+   ```
 ## Screenshots
 
 Here are some screenshots of the system in action:
 
-Home Page: Displays a list of properties.
+- 🏠 Home Page: Displays a list of properties.
+  
+   ![Captura de pantalla 2025-03-06 000624](https://github.com/user-attachments/assets/e47c2180-819d-4e50-8bec-07d88b393563)
 
-Create Property: Form for adding a new property.
+- ➕ Create Property: Form for adding a new property.
+  
+   ![pruebaCRUD](https://github.com/user-attachments/assets/64415f76-6854-49c4-925a-cb6130f0acce)
 
-Edit Property: Form for updating an existing property.
+- ✏️ Edit Property: Form for updating an existing property.
 
-Delete Property: Confirmation dialog for deleting a property.
+   ![pruebaUpdate1](https://github.com/user-attachments/assets/bf12963f-b74b-452b-a52f-2b10bb870ea7)
+  
+   ![Update2](https://github.com/user-attachments/assets/a49e6595-9e71-45d1-aef3-ef8322e8b83d)
+
+
+- 🗑️ Delete Property: Confirmation dialog for deleting a property.
+
+   ![pruebaDELETE](https://github.com/user-attachments/assets/ec5cbd30-9856-4009-98aa-2d5d97c343eb)
+
+- 🔍 Filter Properties: Filter properties by
+  
+   - name
+     
+     ![FiltroNombre](https://github.com/user-attachments/assets/4db1b83d-165b-40a1-a800-7e950f89fe47)
+
+   - size
+     
+     ![FiltroTamaño](https://github.com/user-attachments/assets/4e5d029a-d495-4991-8043-c6423ad2db56)
+
+   - price
+     
+     ![filtroPrecio](https://github.com/user-attachments/assets/bb4acaa2-eebe-4e0c-997b-051470248de6)
+
+- ✅ Success Messages: User feedback for successful operations (e.g., property created, updated, or deleted).
+  
+     ![MensajeVerde](https://github.com/user-attachments/assets/03f726ea-5f9b-4ad3-b9c4-5d568f574eff)
+
+- ❌ Error Messages: User feedback for failed operations (e.g., invalid input or property not found).
+  
+     ![MensajeRojo](https://github.com/user-attachments/assets/c81e1c94-5a1a-4104-8a17-b60f072823bc)
 
 ## Running Tests
 
+To run the unit tests, use the following command:
+
+```bash
+mvn test
+```
+![image](https://github.com/user-attachments/assets/aec5719c-d399-40f1-9ba4-3ab6bfb99bac)
+
+### PropertyControllerTest 🎛️
+
+- testGetAllProperties: Verifies that the GET /api/properties endpoint returns a paginated list of properties.
+
+- testCreateProperty: Ensures that the POST /api/properties endpoint successfully creates a new property.
+
+- testGetPropertyById: Checks that the GET /api/properties/{id} endpoint retrieves a property by its ID.
+
+- testUpdateProperty: Validates that the PUT /api/properties/{id} endpoint updates an existing property.
+
+- testDeleteProperty: Confirms that the DELETE /api/properties/{id} endpoint deletes a property.
+
+### PropertyRepositoryTest 🗄️
+
+- testFindAll: Verifies that the findAll method retrieves all properties with pagination.
+
+- testSearchByQuery: Ensures that the search method filters properties by address or description.
+
+- testSearchByMaxPrice: Checks that the search method filters properties by maximum price.
+
+- testSearchByMaxSize: Validates that the search method filters properties by maximum size.
+
+- testFindById: Confirms that the findById method retrieves a property by its ID.
+
+- testSaveProperty: Tests that the save method correctly persists a new property.
+
+- testDeleteProperty: Ensures that the deleteById method removes a property from the database.
+
+### PropertyServiceTest 🛠️
+
+- testCreateProperty: Verifies that the createProperty method saves a new property.
+
+- testGetAllProperties: Ensures that the getAllProperties method retrieves a paginated list of properties.
+
+- testGetPropertyById: Checks that the getPropertyById method retrieves a property by its ID.
+
+- testUpdateProperty: Validates that the updateProperty method updates an existing property.
+
+- testDeleteProperty: Confirms that the deleteProperty method removes a property.
+
 ## Technologies Used
 
-### Author
+- Java: Main programming language.
 
-### Acknowledgments
+- Spring Boot: Backend framework.
+
+- MySQL: Database management system.
+
+- HTML/CSS/JavaScript: Frontend development.
+
+- Maven: Dependency management and build tool.
+
+- JUnit: For unit testing.
+
+## Author
+
+Developed by Natalia Rojas.
+
+## Acknowledgments
+
+- Spring Boot Documentation: For providing comprehensive guides on building RESTful APIs.
+
+- MySQL Documentation: For detailed information on database management.
+
+- Open Source Community: For tools and resources that helped in the development of this project.
