@@ -422,7 +422,7 @@ mvn test
 
 ## Author
 
-Developed by Natalia Rojas.
+Developed by [Natalia Rojas](https://github.com/Nat15005)
 
 ## Acknowledgments
 
