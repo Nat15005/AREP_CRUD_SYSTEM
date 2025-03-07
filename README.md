@@ -74,6 +74,8 @@ You should see the main page of the application.
 ## System Architecture
 The system is divided into three main components:
 
+![image](https://github.com/user-attachments/assets/04358f66-6b33-43b5-993c-f29593e5460b)
+
 1. *Frontend:* Built with HTML, CSS, and JavaScript. It provides a user-friendly interface for interacting with the property management system. 🌐
 
 2. *Backend:* Implemented with Spring Boot, it exposes RESTful APIs for CRUD operations on properties. The backend handles all the business logic and communicates with the database. 🛠️
