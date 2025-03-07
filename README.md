@@ -53,7 +53,7 @@ Follow these steps to get the development environment running:
 Once the project is built, you can start the server with the following command:
 
 ```bash
-java -cp target/classes arep.crudsystem.Application
+java -jar target/crudsystem-0.0.1-SNAPSHOT.jar
 ```
 
 The server will start and listen on port `8080`.
