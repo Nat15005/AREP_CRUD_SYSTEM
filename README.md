@@ -231,28 +231,39 @@ src
 ### BackEnd
 
 1. Add the Dockerfile to the Root of the Project
-2. Build the Docker Image
+2. Configure the application.properties File
+
+   Before building the Docker image, update the application.properties file to connect to the MySQL database using the public IP of the EC2 instance where the database is hosted. Add the following configuration:
+   ```
+   spring.datasource.url=jdbc:mysql://<PUBLIC_IP_OF_EC2>:3306/property_db
+   spring.datasource.username=<YOUR_DB_USERNAME>
+   spring.datasource.password=<YOUR_DB_PASSWORD>
+   spring.jpa.hibernate.ddl-auto=update
+   spring.jpa.show-sql=true
+   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+   ```
+3. Build the Docker Image
    
    ```
    docker build --tag areptaller5 .
    ```
-3. Create a Repository on Docker Hub
+4. Create a Repository on Docker Hub
 
    ![image](https://github.com/user-attachments/assets/c27251af-16ae-468f-9117-964035dac2bb)
 
-4. Tag the Local Image
+5. Tag the Local Image
    ```
    docker tag areptaller5 nat1505/areptaller5
    ```
-5. Push the Image to Docker Hub
+6. Push the Image to Docker Hub
     ```
     docker push nat1505/areptaller5:latest
     ```
-6. Launch the EC2 Instance
+7. Launch the EC2 Instance
 
    ![image](https://github.com/user-attachments/assets/d582cf0b-4a65-4acd-8125-a662bbb015ab)
 
-7. Configure AWS Security Group to Allow External Access
+8. Configure AWS Security Group to Allow External Access
    - Go to the AWS EC2 Console.
       - Find your instance and open the Security Group settings.
       - Edit Inbound Rules and add a rule to allow traffic:
@@ -263,22 +274,22 @@ src
    ![image](https://github.com/user-attachments/assets/cd897fb3-09f3-4b92-af97-54c7dd8d3b25)
 
            
-8. Connect to the EC2 Instance
+9. Connect to the EC2 Instance
    ```
    ssh -i path/to/your-key.pem ec2-user@<EC2-public-IP>
    ```
-9. Install Docker on the EC2 Instance
+10. Install Docker on the EC2 Instance
    ```
    sudo yum update -y
    sudo yum install docker -y
    sudo service docker start
    sudo usermod -a -G docker ec2-user
    ```
-10. Download the Image from Docker Hub
+11. Download the Image from Docker Hub
       ```
       docker pull nat1505/areptaller5:latest
       ```
-11. Run the Container
+12. Run the Container
       ```
       docker run -d -p 8080:8080 --name areptaller5 nat1505/areptaller5
       ```
