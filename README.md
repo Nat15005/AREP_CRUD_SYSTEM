@@ -110,6 +110,9 @@ Backend → Frontend: The backend sends responses back to the frontend, which di
 
 ## Class Design
 
+![image](https://github.com/user-attachments/assets/59ba31dc-41eb-45ae-94c2-64f3e9a52538)
+
+
 The main classes in the system are:
 
 ### 🏠 Property (Model)
